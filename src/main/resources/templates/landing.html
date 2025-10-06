@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Beneficiarios Mejores ICFES Sibaté</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" th:href="@{/css/app.css}" />
+  <style>
+    /* Unas pinceladas por si tu app.css no tiene estos estilos */
+    .topbar { padding: 1rem 0; text-align: center; font-weight: 700; font-size: 1.1rem; color: #374151; }
+    .hero { max-width: 820px; margin: 2rem auto; padding: 2rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; }
+    .hero h1 { font-size: 1.8rem; margin: 0 0 1rem; color: #111827; }
+    .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+    .btn-big { display: inline-block; text-align: center; padding: 1.1rem 1.25rem; border-radius: 12px; border: 0; font-size: 1.05rem; font-weight: 600; text-decoration: none; }
+    .btn-primary { background: #111827; color: #fff; }
+    .btn-secondary { background: #4b5563; color: #fff; }
+    .btn-big:hover { filter: brightness(1.05); }
+  </style>
+</head>
+<body>
+  <header class="topbar">Beneficiarios Mejores ICFES Sibaté</header>
+
+  <main class="hero container">
+    <h1>Bienvenido</h1>
+    <p>Elige una opción para continuar.</p>
+
+    <div class="actions">
+      <a class="btn-big btn-primary" href="/register">Registrarme</a>
+      <a class="btn-big btn-secondary" href="/login">Iniciar sesión</a>
+    </div>
+  </main>
+</body>
+</html>

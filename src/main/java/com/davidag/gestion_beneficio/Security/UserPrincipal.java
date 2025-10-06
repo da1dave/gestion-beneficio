@@ -1,0 +1,46 @@
+package com.davidag.gestion_beneficio.Security;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.davidag.gestion_beneficio.Model.Usuario;
+import com.davidag.gestion_beneficio.Enum.Rol;
+import com.davidag.gestion_beneficio.Enum.TipoDoc;
+
+public class UserPrincipal implements UserDetails {
+
+    private final Usuario user;
+
+    public UserPrincipal(Usuario user) {
+        this.user = user;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Rol rolEnum = user.getRoles(); 
+        String rol = (rolEnum == null) ? "BENEFICIARIO" : rolEnum.name();
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol));
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPasswordHash(); 
+    }
+
+    @Override
+    public String getUsername() {
+        
+        TipoDoc tipo = user.getTipodocumento();
+        return (tipo != null) ? tipo.name() + ":" + user.getNumdoc() : user.getNumdoc();
+    }
+
+    @Override public boolean isAccountNonExpired()  { return true; }
+    @Override public boolean isAccountNonLocked()   { return true; }
+    @Override public boolean isCredentialsNonExpired(){ return true; }
+    @Override public boolean isEnabled()            { return user.isActivo(); } 
+}
+

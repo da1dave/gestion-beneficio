@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro de Beneficiario</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <main class="container">
+    <div class="card">
+      <h1>Registro de Beneficiario</h1>
+      <p class="small">Valida tu identidad para poder crear tu usuario.</p>
+
+      <div id="msg" class="alert" style="display:none;"></div>
+
+      <form id="registerForm" class="grid">
+        <div class="grid grid-2">
+          <div>
+            <label>Tipo de documento</label>
+            <select name="tipodocumento" required>
+          
+              <option value="">-- Selecciona --</option>
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+              <option value="TI">Tarjeta de Identidad (TI)</option>
+            </select>
+          </div>
+          <div>
+            <label>Número de documento</label>
+            <input name="numdoc" required />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <label>Fecha de expedición del documento</label>
+            <input type="date" name="fechaexpdoc" required />
+          </div>
+          <div>
+            <label>Fecha de nacimiento</label>
+            <input type="date" name="fechanac" required />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <label>Email</label>
+            <input type="email" name="email" required />
+          </div>
+          <div>
+            <label>Celular</label>
+            <input name="celular" required />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div>
+            <label>Tipo de beneficio</label>
+            <select name="tipobeneficio" required>
+        
+              <option value="">-- Selecciona --</option>
+              <option value="MATRICULA">Matrícula</option>
+              <option value="APOYO">Apoyo</option>
+            </select>
+          </div>
+          <div>
+            <label>Año de convocatoria</label>
+            <input type="number" name="convocatoriaanio" min="2000" max="2100" required />
+          </div>
+        </div>
+
+        <div>
+          <button id="submitBtn" type="submit">Validar y continuar</button>
+        </div>
+      </form>
+
+      <footer>Al continuar, aceptas el tratamiento de datos para validar tu beneficio.</footer>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const msg  = document.getElementById('msg');
+    const btn  = document.getElementById('submitBtn');
+
+    function show(type, text) {
+      msg.className = 'alert ' + (type === 'ok' ? 'ok' : 'err');
+      msg.textContent = text;
+      msg.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.style.display = 'none';
+      btn.disabled = true;
+
+      const data = Object.fromEntries(new FormData(form));
+  
+      const payload = {
+        tipodocumento: data.tipodocumento,
+        numdoc: data.numdoc.trim(),
+        fechaexpdoc: data.fechaexpdoc,   
+        fechanac: data.fechanac,         
+        email: data.email.trim(),
+        celular: data.celular.trim(),
+        tipobeneficio: data.tipobeneficio,
+        convocatoriaanio: Number(data.convocatoriaanio)
+      };
+
+      try {
+        const res = await fetch('/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          const msgText = err?.message || err?.detail || 'Error al validar tus datos.';
+          show('err', msgText);
+          btn.disabled = false;
+          return;
+        }
+
+        const json = await res.json(); 
+        const t = encodeURIComponent(json.registerToken);
+        window.location.href = `/create-password?token=${t}`;
+      } catch (ex) {
+        show('err', 'No fue posible conectar con el servidor.');
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

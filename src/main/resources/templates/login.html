@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iniciar sesión · Beneficiarios Mejores ICFES Sibaté</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" th:href="@{/css/app.css}" />
+  <style>
+    .topbar { padding: 1rem 0; text-align: center; font-weight: 700; font-size: 1.1rem; color: #374151; }
+    .card { max-width: 560px; margin: 2.5rem auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; }
+    .card h1 { font-size: 1.6rem; margin: 0 0 1rem; color: #111827; }
+    .field { margin-bottom: .9rem; }
+    .field label { display:block; margin-bottom: .35rem; color:#374151; font-size:.95rem; }
+    .field input, .field select { width:100%; padding:.65rem .75rem; border:1px solid #d1d5db; border-radius:8px; }
+    .grid-2 { display:grid; gap:1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .btn { width:100%; padding:.85rem 1rem; border-radius:10px; border:0; background:#111827; color:#fff; font-weight:600; cursor:pointer; }
+    .btn:disabled { opacity:.6; cursor:not-allowed; }
+    .alert { display:none; margin-bottom: .75rem; padding:.7rem 1rem; border-radius:10px; font-size:.92rem; }
+    .alert.ok { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+    .alert.err { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    .links { margin-top:1rem; text-align:center; }
+    .links a { color:#374151; text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header class="topbar">Beneficiarios Mejores ICFES Sibaté</header>
+
+  <main class="card">
+    <h1>Iniciar sesión</h1>
+
+    <div id="msg" class="alert"></div>
+
+    <form id="loginForm" autocomplete="on">
+      <div class="grid-2">
+        <div class="field">
+          <label for="tipodocumento">Tipo de documento</label>
+          <select id="tipodocumento" name="tipodocumento" required>
+            <option value="">-- Selecciona --</option>
+            <option value="CC">Cédula de Ciudadanía (CC)</option>
+            <option value="CE">Cédula de Extranjería (CE)</option>
+            <option value="TI">Tarjeta de Identidad (TI)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="numdoc">Número de documento</label>
+          <input id="numdoc" name="numdoc" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" required />
+      </div>
+
+      <button class="btn" type="submit">Entrar</button>
+
+      <div class="links">
+        <a href="/">Volver</a> · <a href="/register">¿No tienes cuenta? Regístrate</a>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    const f = document.getElementById('loginForm');
+    const msg = document.getElementById('msg');
+
+    function show(type, text) {
+      msg.className = 'alert ' + (type === 'ok' ? 'ok' : 'err');
+      msg.textContent = text;
+      msg.style.display = 'block';
+    }
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.style.display = 'none';
+
+      const tipodocumento = (f.tipodocumento.value || '').toUpperCase().trim();
+      const numdoc = f.numdoc.value.trim();
+      const password = f.password.value;
+
+      if (!tipodocumento || !numdoc || !password) {
+        show('err', 'Completa tipo, número de documento y contraseña.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tipodocumento, numdoc, password })
+        });
+
+        if (!res.ok) {
+          show('err', 'Credenciales inválidas o usuario no encontrado.');
+          return;
+        }
+
+        const data = await res.json(); 
+        if (data.token) localStorage.setItem('AUTH_TOKEN', data.token);
+
+        show('ok', 'Inicio de sesión exitoso.');
+        setTimeout(() => window.location.href = '/', 700);
+      } catch (err) {
+        console.error(err);
+        show('err', 'Error de red al iniciar sesión.');
+      }
+    });
+  </script>
+</body>
+</html>
