@@ -35,11 +35,16 @@ public class AuthService {
     
     public RegisterResponse register(RegisterRequest req) {
 
-       
+    
         Beneficiario beneficiario = repoBeneficiario
                 .findByTipodocumentoAndNumerodocumento(req.getTipodocumento(), req.getNumdoc())
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Beneficiario no encontrado"));
+        
+        if (!req.getFechaexpdoc().equals(beneficiario.getFechaexpdoc()))
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fecha de expedición no coincide");
+        if (!req.getFechanac().equals(beneficiario.getFechanac()))
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fecha de nacimiento no coincide");
 
        
         String subject = "REG:" + req.getTipodocumento().name() + ":" + req.getNumdoc();

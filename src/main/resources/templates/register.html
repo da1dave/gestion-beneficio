@@ -42,34 +42,6 @@
             <input type="date" name="fechanac" required />
           </div>
         </div>
-
-        <div class="grid grid-2">
-          <div>
-            <label>Email</label>
-            <input type="email" name="email" required />
-          </div>
-          <div>
-            <label>Celular</label>
-            <input name="celular" required />
-          </div>
-        </div>
-
-        <div class="grid grid-2">
-          <div>
-            <label>Tipo de beneficio</label>
-            <select name="tipobeneficio" required>
-        
-              <option value="">-- Selecciona --</option>
-              <option value="MATRICULA">Matrícula</option>
-              <option value="APOYO">Apoyo</option>
-            </select>
-          </div>
-          <div>
-            <label>Año de convocatoria</label>
-            <input type="number" name="convocatoriaanio" min="2000" max="2100" required />
-          </div>
-        </div>
-
         <div>
           <button id="submitBtn" type="submit">Validar y continuar</button>
         </div>
@@ -101,11 +73,8 @@
         tipodocumento: data.tipodocumento,
         numdoc: data.numdoc.trim(),
         fechaexpdoc: data.fechaexpdoc,   
-        fechanac: data.fechanac,         
-        email: data.email.trim(),
-        celular: data.celular.trim(),
-        tipobeneficio: data.tipobeneficio,
-        convocatoriaanio: Number(data.convocatoriaanio)
+        fechanac: data.fechanac     
+
       };
 
       try {

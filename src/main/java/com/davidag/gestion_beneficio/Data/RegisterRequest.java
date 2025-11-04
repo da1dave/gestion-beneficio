@@ -17,8 +17,5 @@ public class RegisterRequest {
     @NotBlank private String numdoc;
     @NotNull private LocalDate fechaexpdoc;
     @NotNull private LocalDate fechanac;
-    @Email @NotBlank private String email;
-    @NotBlank private String celular;
-    @NotNull private TipoBeneficio tipobeneficio;
-    @NotNull private Integer convocatoriaanio;
+
 }
