@@ -22,49 +22,51 @@ El sistema permite administrar usuarios, roles, autenticación, y manejo de esta
 
 ## 🧩 Estructura del Proyecto
 
-gestion-beneficio/
-│
-├── pom.xml # Configuración del proyecto y dependencias Maven
-├── src/main/java/com/davidag/gestion_beneficio/
-│ ├── GestionBeneficioApplication.java # Clase principal (punto de entrada)
-│ │
-│ ├── Controller/ # Controladores REST y de páginas
-│ │ ├── AuthController.java # Controlador de autenticación (login / registro)
-│ │ └── PageController.java # Controlador de vistas principales
-│ │
-│ ├── Data/ # Clases DTO (Transferencia de Datos)
-│ │ ├── LoginRequest.java
-│ │ ├── RegisterRequest.java
-│ │ ├── RegisterResponse.java
-│ │ └── AuthResponse.java
-│ │
-│ ├── Enum/ # Enumeraciones del dominio
-│ │ ├── EstadoBeneficiario.java # Define los posibles estados del beneficio
-│ │ ├── TipoBeneficio.java # Clasifica los tipos de beneficio
-│ │ ├── Rol.java # Roles del sistema (ADMIN, USER)
-│ │ └── TipoDoc.java # Tipos de documentos de identidad
-│ │
-│ ├── Filter/
-│ │ └── JwtFilter.java # Filtro JWT para validar tokens en cada solicitud
-│ │
-│ ├── Model/ # Entidades de la base de datos
-│ │ ├── Beneficiario.java # Modelo principal del estudiante beneficiado
-│ │ └── Usuario.java # Modelo de usuario del sistema
-│ │
-│ ├── Repo/ # Repositorios JPA
-│ │ ├── RepoBeneficiario.java
-│ │ └── RepoUsuario.java
-│ │
-│ └── Security/ # Configuración de seguridad
-│ ├── SecurityConfig.java # Configuración general de Spring Security
-│ ├── UserDetailsServiceIm.java # Servicio que carga los usuarios
-│ └── UserPrincipal.java # Implementación personalizada de usuario autenticado
-│
-├── src/main/resources/
-│ ├── application.properties # Configuración del entorno
-│ └── templates/ # Vistas HTML (Thymeleaf)
-│
-└── HELP.md / README.md # Documentación del proyecto
+ gestion-beneficio/
+    │
+    ├── pom.xml                                   # Configuración del proyecto y dependencias Maven
+    ├── src/main/java/com/davidag/gestion_beneficio/
+    │   ├── GestionBeneficioApplication.java       # Clase principal (punto de entrada)
+    │   │
+    │   ├── Controller/                            # Controladores REST y de páginas
+    │   │   ├── AuthController.java                # Controlador de autenticación (login / registro)
+    │   │   └── PageController.java                # Controlador de vistas principales
+    │   │
+    │   ├── Data/                                  # Clases DTO (Transferencia de Datos)
+    │   │   ├── LoginRequest.java
+    │   │   ├── RegisterRequest.java
+    │   │   ├── RegisterResponse.java
+    │   │   └── AuthResponse.java
+    │   │
+    │   ├── Enum/                                  # Enumeraciones del dominio
+    │   │   ├── EstadoBeneficiario.java            # Define los posibles estados del beneficio
+    │   │   ├── TipoBeneficio.java                 # Clasifica los tipos de beneficio
+    │   │   ├── Rol.java                           # Roles del sistema (ADMIN, USER)
+    │   │   └── TipoDoc.java                       # Tipos de documentos de identidad
+    │   │
+    │   ├── Filter/
+    │   │   └── JwtFilter.java                     # Filtro JWT para validar tokens en cada solicitud
+    │   │
+    │   ├── Model/                                 # Entidades de la base de datos
+    │   │   ├── Beneficiario.java                  # Modelo principal del estudiante beneficiado
+    │   │   └── Usuario.java                       # Modelo de usuario del sistema
+    │   │
+    │   ├── Repo/                                  # Repositorios JPA
+    │   │   ├── RepoBeneficiario.java
+    │   │   └── RepoUsuario.java
+    │   │
+    │   └── Security/                              # Configuración de seguridad
+    │       ├── SecurityConfig.java                # Configuración general de Spring Security
+    │       ├── UserDetailsServiceIm.java          # Servicio que carga los usuarios
+    │       └── UserPrincipal.java                 # Implementación personalizada de usuario autenticado
+    │
+    ├── src/main/resources/
+    │   ├── application.properties                 # Configuración del entorno
+    │   └── templates/                             # Vistas HTML (Thymeleaf)
+    │
+    └── HELP.md / README.md                        # Documentación del proyecto
+
+---
 
 ## 🔐 Funcionalidades Principales
 - **Autenticación y autorización mediante JWT**
