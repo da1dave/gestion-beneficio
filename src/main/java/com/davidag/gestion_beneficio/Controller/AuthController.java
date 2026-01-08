@@ -5,11 +5,15 @@ import com.davidag.gestion_beneficio.Data.CreateUserRequest;
 import com.davidag.gestion_beneficio.Data.LoginRequest;
 import com.davidag.gestion_beneficio.Data.RegisterRequest;
 import com.davidag.gestion_beneficio.Data.RegisterResponse;
+import com.davidag.gestion_beneficio.Data.ResetPasswordRequest;
 import com.davidag.gestion_beneficio.Service.Jwt.JwtService;
 import com.davidag.gestion_beneficio.Services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -42,4 +46,15 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
         return ResponseEntity.ok(authService.login(req));
     }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest req){
+
+        authService.resetPassword(req);
+        
+        return ResponseEntity.ok().build();
+
+    } 
+   
+    
 }

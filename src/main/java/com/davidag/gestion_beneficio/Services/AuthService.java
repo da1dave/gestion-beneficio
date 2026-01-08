@@ -5,13 +5,13 @@ import com.davidag.gestion_beneficio.Data.CreateUserRequest;
 import com.davidag.gestion_beneficio.Data.LoginRequest;
 import com.davidag.gestion_beneficio.Data.RegisterRequest;
 import com.davidag.gestion_beneficio.Data.RegisterResponse;
+import com.davidag.gestion_beneficio.Data.ResetPasswordRequest;
 import com.davidag.gestion_beneficio.Enum.TipoDoc;
 import com.davidag.gestion_beneficio.Model.Beneficiario;
 import com.davidag.gestion_beneficio.Model.Usuario;
 import com.davidag.gestion_beneficio.Repo.RepoBeneficiario;
 import com.davidag.gestion_beneficio.Repo.RepoUsuario;
 import com.davidag.gestion_beneficio.Service.Jwt.JwtService;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -115,6 +115,8 @@ public class AuthService {
         String jwt = jwtService.generateToken(sessionSubject, Map.of());
         return new AuthResponse(jwt);
     }
+
+
     public AuthResponse login(LoginRequest req) {
 
         Usuario usuario = repoUsuario
@@ -131,4 +133,29 @@ public class AuthService {
         String jwt = jwtService.generateToken(subject, Map.of());
         return new AuthResponse(jwt);
     }
+
+    public void resetPassword(ResetPasswordRequest req){
+
+        Beneficiario beneficiario = repoBeneficiario
+                                    .findByTipodocumentoAndNumerodocumento(req.getTipodocumento(), req.getNumdoc())
+                                    .orElseThrow(() -> 
+                                            new ResponseStatusException(HttpStatus.NOT_FOUND, "Beneficiario no encontrado"));
+        if(!req.getFechaexpdoc().equals(beneficiario.getFechaexpdoc()))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fecha de expedición no coincide");
+        if(!req.getFechanac().equals(beneficiario.getFechanac()))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fecha de nacimiento no coincide");
+
+        Usuario usuario = repoUsuario
+                          .findByTipodocumentoAndNumdoc(req.getTipodocumento(), req.getNumdoc())
+                          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        if(!usuario.isActivo()){
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
+        }
+
+        usuario.setPasswordHash(passwordEncoder.encode(req.getNewpassword()));
+        repoUsuario.save(usuario);
+    }
+
 }

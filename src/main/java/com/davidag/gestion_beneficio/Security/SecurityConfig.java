@@ -28,14 +28,15 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/", "/register", "/create-password", "/login",
+                    "/", "/register", "/create-password", "/login", "/reset-password",
                     "/css/**", "/js/**", "/images/**"
                 ).permitAll()
             
                 .requestMatchers(
                     "/auth/register",
                     "/auth/create-user",   
-                    "/auth/login"
+                    "/auth/login",
+                    "/auth/reset-password"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

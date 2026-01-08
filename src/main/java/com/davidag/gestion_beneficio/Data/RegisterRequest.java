@@ -1,6 +1,4 @@
 package com.davidag.gestion_beneficio.Data;
-
-import com.davidag.gestion_beneficio.Enum.TipoBeneficio;
 import com.davidag.gestion_beneficio.Enum.TipoDoc;
 import lombok.AllArgsConstructor;
 import lombok.Data;
