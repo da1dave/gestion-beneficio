@@ -3,6 +3,7 @@ package com.davidag.gestion_beneficio.Security;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,8 @@ import com.davidag.gestion_beneficio.Enum.TipoDoc;
 
 public class UserPrincipal implements UserDetails {
 
-    private final Usuario user;
+    @Autowired
+    private Usuario user;
 
     public UserPrincipal(Usuario user) {
         this.user = user;

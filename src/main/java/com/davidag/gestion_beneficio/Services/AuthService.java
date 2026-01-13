@@ -13,6 +13,8 @@ import com.davidag.gestion_beneficio.Repo.RepoBeneficiario;
 import com.davidag.gestion_beneficio.Repo.RepoUsuario;
 import com.davidag.gestion_beneficio.Service.Jwt.JwtService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,10 +29,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final RepoBeneficiario repoBeneficiario;
-    private final RepoUsuario repoUsuario;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    @Autowired
+    private RepoBeneficiario repoBeneficiario;
+    @Autowired
+    private RepoUsuario repoUsuario;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
 
     
     public RegisterResponse register(RegisterRequest req) {
