@@ -35,8 +35,8 @@ public class Documento {
     private TipoDocBen tipodocben;
 
     @ManyToOne
-    @JoinColumn(name = "beneficiario_id", nullable= false)
-    private Beneficiario beneficiario;
+    @JoinColumn(name = "usuario_id", nullable= false)
+    private Usuario usuario;
 
     private String keyspaces;   
 

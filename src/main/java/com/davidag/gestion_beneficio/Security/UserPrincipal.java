@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.davidag.gestion_beneficio.Model.Usuario;
 import com.davidag.gestion_beneficio.Enum.Rol;
-import com.davidag.gestion_beneficio.Enum.TipoDoc;
+
 
 public class UserPrincipal implements UserDetails {
 
@@ -35,9 +35,8 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        
-        TipoDoc tipo = user.getTipodocumento();
-        return (tipo != null) ? tipo.name() + ":" + user.getNumdoc() : user.getNumdoc();
+
+        return  user.getNumdoc();
     }
 
     @Override public boolean isAccountNonExpired()  { return true; }

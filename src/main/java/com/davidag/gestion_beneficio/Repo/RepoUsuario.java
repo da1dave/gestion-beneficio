@@ -13,5 +13,6 @@ public interface RepoUsuario extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByNumdoc(String numdoc);
     Optional<Usuario> findByTipodocumentoAndNumdoc(TipoDoc tipodocumento, String numdoc);
     boolean existsByBeneficiario(Beneficiario b);
+
     
 }

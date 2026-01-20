@@ -55,5 +55,6 @@ public class Beneficiario {
 
     @Enumerated(EnumType.STRING) @Column(nullable=false, length=30)
     private EstadoBeneficiario estado;
+
   
 }

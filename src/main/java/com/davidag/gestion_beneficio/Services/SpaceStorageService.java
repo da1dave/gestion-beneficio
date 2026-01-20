@@ -24,9 +24,9 @@ public class SpaceStorageService {
     @Value("${do.spaces.bucket}")
     private String bucket;
 
-    public String subirDocumento(MultipartFile archivo, Integer benfid, String tipodoc) throws IOException{
+    public String subirDocumento(MultipartFile archivo, Integer userid, String tipodoc) throws IOException{
 
-        String key = "beneficiarios/"+benfid+"/"+tipodoc+".pdf";
+        String key = "beneficiarios/"+userid+"/"+tipodoc+".pdf";
 
         PutObjectRequest request = PutObjectRequest.builder()
                                                          .bucket(bucket)

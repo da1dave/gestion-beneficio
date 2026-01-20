@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.davidag.gestion_beneficio.Model.Documento;
+import com.davidag.gestion_beneficio.Model.Usuario;
 import com.davidag.gestion_beneficio.Enum.EstadoDoc;
 import com.davidag.gestion_beneficio.Enum.TipoDocBen;
 
@@ -14,7 +15,9 @@ import com.davidag.gestion_beneficio.Enum.TipoDocBen;
 @Repository
 public interface RepoDocumento extends JpaRepository<Documento, Integer>{
 
-    List<Documento> findByBeneficiarioId(Integer Beneficiario);
+    boolean existByUsuarioAndTipodocben(Usuario usuario, TipoDocBen tipodocben);
+    
+    List<Documento> findByBeneficiarioNumerDocumento(String numerodocumento);
 
     List<Documento> findByEstadodoc(EstadoDoc estadodoc);
 

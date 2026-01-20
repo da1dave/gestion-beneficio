@@ -2,6 +2,7 @@ package com.davidag.gestion_beneficio.Model;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +20,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.ForeignKey;
 import lombok.AllArgsConstructor;
@@ -50,15 +52,15 @@ public class Usuario {
     private Instant creadoen;
     @UpdateTimestamp 
     private Instant actualizadoen;
-    // ...
+
     @Column(name = "password_hash", nullable = false, length = 200)
     private String passwordHash;
 
     @Column(nullable = false)
     private boolean activo = true;
 
-
-    
-    
+    @OneToMany(mappedBy =  "beneficiario", fetch = FetchType.LAZY)  
+    private List<Documento> documentos;
+      
     
 }

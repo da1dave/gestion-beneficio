@@ -16,7 +16,7 @@ public class SpacesConfig {
 
     @Bean
     public S3Client s3client(
-        @Value("${do.spaces.key}") String key,
+            @Value("${do.spaces.key}") String key,
             @Value("${do.spaces.secret}") String secret,
             @Value("${do.spaces.endpoint}") String endpoint,
             @Value("${do.spaces.region}") String region
