@@ -1,6 +1,7 @@
 package com.davidag.gestion_beneficio.Services;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,12 @@ public class DocumentoService {
     private SpaceStorageService spaceserv;
     @Autowired
     private UsuarioService usuarioserv;
+
     public Documento subirDocumentoUsuario(TipoDocBen tipodocben,  MultipartFile archivo){
 
         Usuario user = usuarioserv.currentUser();
 
-        if (repodoc.existByUsuarioAndTipodocben(user, tipodocben)){
+        if (repodoc.existsByUsuarioAndTipodocben(user, tipodocben)){
 
             throw new RuntimeException("El documento ya fue cargado...");
 
@@ -51,6 +53,14 @@ public class DocumentoService {
 
         return repodoc.save(doc);
 
+    }
+
+    public List<Documento> verMisDocumentos(){
+
+        String numdoc = usuarioserv.currentUserNumDoc();
+
+        return repodoc.findByUsuarioNumdoc(numdoc);
+        
     }
 
 

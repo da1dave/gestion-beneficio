@@ -59,7 +59,7 @@ public class Usuario {
     @Column(nullable = false)
     private boolean activo = true;
 
-    @OneToMany(mappedBy =  "beneficiario", fetch = FetchType.LAZY)  
+    @OneToMany(mappedBy =  "usuario", fetch = FetchType.LAZY)  
     private List<Documento> documentos;
       
     

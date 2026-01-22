@@ -15,14 +15,13 @@ import com.davidag.gestion_beneficio.Enum.TipoDocBen;
 @Repository
 public interface RepoDocumento extends JpaRepository<Documento, Integer>{
 
-    boolean existByUsuarioAndTipodocben(Usuario usuario, TipoDocBen tipodocben);
-    
-    List<Documento> findByBeneficiarioNumerDocumento(String numerodocumento);
+    boolean existsByUsuarioAndTipodocben(Usuario usuario, TipoDocBen tipodocben);
+
+    List<Documento> findByUsuarioNumdoc(String numerodocumento);
 
     List<Documento> findByEstadodoc(EstadoDoc estadodoc);
 
     List<Documento> findByTipodocben(TipoDocBen tipodocben);
 
-    boolean existsByBeneficiarioIdAndTipodocben(Integer beneficiarioId, TipoDocBen tipoDocBen);
     
 }
