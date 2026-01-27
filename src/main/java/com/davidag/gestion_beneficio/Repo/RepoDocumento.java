@@ -23,5 +23,13 @@ public interface RepoDocumento extends JpaRepository<Documento, Integer>{
 
     List<Documento> findByTipodocben(TipoDocBen tipodocben);
 
+    List<Documento> findByEstadodocAndTipodocben(EstadoDoc estadodoc, TipoDocBen tipodocben);
+
+    List<Documento> findByUsuario_Beneficiario_NombreContainingIgnoreCase(String nombre);
+
+    List<Documento> findByUsuario_Beneficiario_ApellidoContainingIgnoreCase(String nombre);
+
+
+
     
 }

@@ -2,11 +2,13 @@ package com.davidag.gestion_beneficio.Services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.davidag.gestion_beneficio.Enum.EstadoDoc;
 import com.davidag.gestion_beneficio.Enum.TipoDocBen;
 import com.davidag.gestion_beneficio.Model.Documento;
 import com.davidag.gestion_beneficio.Model.Usuario;
@@ -63,6 +65,57 @@ public class DocumentoService {
         
     }
 
+    //SERVICIOS DE ADMIN
+
+    public List<Documento> verTodosLosDocumentos(){
+
+        return repodoc.findAll();
+    }
+
+    //ADMIN: Filtrar
+
+    public List<Documento> filtrarDocs( EstadoDoc estadodoc, TipoDocBen tipodocben, String numerodoc){
+        
+        if(estadodoc != null && tipodocben != null){
+
+            return repodoc.findByEstadodocAndTipodocben(estadodoc, tipodocben);
+        }
+        if(estadodoc != null){
+
+            return repodoc.findByEstadodoc(estadodoc);
+        }
+        if (tipodocben != null){
+
+            return repodoc.findByTipodocben(tipodocben);
+        }
+        if (numerodoc != null){
+
+            return repodoc.findByUsuarioNumdoc(numerodoc);
+        }
+
+        return repodoc.findAll();
+    
+    }
+
+    //ADMIN: buscar documentos por nombre o apellido
+    public List<Documento> buscarPorNombre(String nombre){
+        
+        if(nombre == null || nombre.isBlank()){
+
+           return repodoc.findAll();
+        }
+
+        List<Documento> pornombre = repodoc.findByUsuario_Beneficiario_NombreContainingIgnoreCase(nombre);
+
+        List<Documento> porapellido = repodoc.findByUsuario_Beneficiario_ApellidoContainingIgnoreCase(nombre);
+
+        return Stream.concat(pornombre.stream(), porapellido.stream())
+                     .distinct()
+                     .toList();             
+
+    }
+
+    
 
     
 }
