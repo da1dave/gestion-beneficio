@@ -65,14 +65,14 @@ public class DocumentoService {
         
     }
 
-    //SERVICIOS DE ADMIN
+    //--SERVICIOS DE ADMIN--//
 
     public List<Documento> verTodosLosDocumentos(){
 
         return repodoc.findAll();
     }
 
-    //ADMIN: Filtrar
+    //--ADMIN: Filtrar--//
 
     public List<Documento> filtrarDocs( EstadoDoc estadodoc, TipoDocBen tipodocben, String numerodoc){
         
