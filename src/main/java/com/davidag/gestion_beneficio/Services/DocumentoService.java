@@ -97,7 +97,7 @@ public class DocumentoService {
     
     }
 
-    //ADMIN: buscar documentos por nombre o apellido
+    //--ADMIN: buscar documentos por nombre o apellido--//
     public List<Documento> buscarPorNombre(String nombre){
         
         if(nombre == null || nombre.isBlank()){
@@ -112,6 +112,32 @@ public class DocumentoService {
         return Stream.concat(pornombre.stream(), porapellido.stream())
                      .distinct()
                      .toList();             
+
+    }
+
+    //--ADMIN: Aprobar documentos--//
+
+    public Documento aprobarDocumento(Integer docid){
+
+        Documento doc = repodoc.findById(docid)
+                               .orElseThrow(() -> new RuntimeException("Documento no encontrado..."));
+
+        doc.setEstadodoc(EstadoDoc.APROBADO);
+
+        return repodoc.save(doc);
+
+    }
+
+    //--ADMIN: Rechazar documentos--//
+
+     public Documento rechazarDocumento(Integer docid){
+
+        Documento doc = repodoc.findById(docid)
+                               .orElseThrow(() -> new RuntimeException("Documento no encontrado..."));
+
+        doc.setEstadodoc(EstadoDoc.RECHAZADO);
+
+        return repodoc.save(doc);
 
     }
 
